@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint . --fix",
-    "dev": "npx ts-node src/api.ts"
+    "dev": "npx ts-node src/server.ts"
   },
   "author": "",
   "license": "ISC",
@@ -18,10 +18,12 @@
     "@types/jest": "^29.5.3",
     "@types/multer": "^1.4.7",
     "@types/node": "^20.4.4",
+    "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
     "@typescript-eslint/parser": "^6.2.0",
     "eslint": "^8.45.0",
     "jest": "^29.6.1",
+    "supertest": "^6.3.3",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6"
   },
