@@ -7,6 +7,8 @@ import sharp from 'sharp';
 import daikon from 'daikon';
 
 const app = express();
+
+// TODO: store files in AWS, currently files are store under uploads folder locally
 const upload = multer({ dest: 'uploads/' });
 
 app.post('/api/upload', upload.single('file'), (req: Request, res: Response) => {
@@ -14,10 +16,6 @@ app.post('/api/upload', upload.single('file'), (req: Request, res: Response) => 
 });
 
 
-// dicomTag is a string 8 digits, https://www.dicomlibrary.com/dicom/dicom-tags/
-// 00100010 Patient's Name
-// 00100020	Patient ID
-// 00200013	Instance Number
 app.get('/api/dicom', (req: Request, res: Response) => {
   const fileId= req.query.fileId as string;
   const dicomTag = req.query.dicomTag as string;
@@ -34,6 +32,8 @@ app.get('/api/dicom', (req: Request, res: Response) => {
     res.status(200).json({ dicomTag: dicomTag, value: attribute });
   });
 });
+
+// TODO: support image resizing api based on query parameters
 app.get('/api/dicom/image', (req: Request, res: Response) => {
   const fileId= req.query.fileId as string;
   const filePath = path.join(__dirname, '../uploads', fileId);
@@ -53,6 +53,7 @@ app.get('/api/dicom/image', (req: Request, res: Response) => {
       downscaledBuffer[i] = value >> 8; 
     }
 
+    // TODO: store files in AWS, currently files are store under assets folder locally
     const outputImagePath = path.join(__dirname, '../assets/' + fileId + '.png');
     sharp(downscaledBuffer, {
       raw: {
